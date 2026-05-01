@@ -129,9 +129,6 @@ function ProfilePage({
         <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-950/10">
           <div className="h-full w-[42%] rounded-full bg-gradient-to-r from-teal-400 via-lime-300 to-amber-300" />
         </div>
-        <p className="mt-3 text-xs font-medium leading-5 text-slate-500">
-          Suggested title ladder: Novice, Apprentice, Guide, Mentor, Master.
-        </p>
       </section>
 
       <section>

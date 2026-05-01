@@ -8,6 +8,7 @@ import {
   recentTransactions,
   rewardStats,
   teachingRequests,
+  userTeachingQuests,
 } from "./data/mockData";
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -70,7 +71,12 @@ function App() {
   });
   const [activeTab, setActiveTab] = useState<TabId>("dashboard");
   const [credits, setCredits] = useState(currentUser.credits);
-  const [skills, setSkills] = useState<Skill[]>(featuredSkills);
+  const [skills, setSkills] = useState<Skill[]>([
+    ...userTeachingQuests,
+    ...featuredSkills,
+  ]);
+  const [openedQuests, setOpenedQuests] =
+    useState<Skill[]>(userTeachingQuests);
   const [learningCount, setLearningCount] = useState(currentUser.learning);
   const [teachingCount, setTeachingCount] = useState(currentUser.teaching);
   const [completedCount, setCompletedCount] = useState(currentUser.completed);
@@ -231,6 +237,7 @@ function App() {
     };
 
     setSkills((currentSkills) => [newSkill, ...currentSkills]);
+    setOpenedQuests((currentQuests) => [newSkill, ...currentQuests]);
     setTeachingCount((currentTeaching) => currentTeaching + 1);
     setIncomingRequests((currentRequests) => [
       {
@@ -244,6 +251,54 @@ function App() {
       },
       ...currentRequests,
     ]);
+  };
+
+  const handleUpdateSkill = (skillId: string, listing: SkillListingInput) => {
+    const updatedFields = {
+      title: listing.title,
+      category: listing.category,
+      credits: listing.credits,
+      format: formatByDeliveryType[listing.deliveryType],
+      level: listing.level,
+      description: listing.description,
+      deliveryType: listing.deliveryType,
+      deliverySummary:
+        listing.deliveryType === "Mini Course"
+          ? "A compact course-style listing with lessons, checkpoints, and a completion task."
+          : "A flexible peer exchange with scheduling and progress tracked in the prototype.",
+      trackingSteps:
+        listing.deliveryType === "Mini Course"
+          ? [
+              "Requested",
+              "Accepted",
+              "In Progress",
+              "Submitted Work",
+              "Completed",
+              "Rated",
+            ]
+          : ["Requested", "Accepted", "In Progress", "Completed", "Rated"],
+    } satisfies Partial<Skill>;
+
+    setSkills((currentSkills) =>
+      currentSkills.map((skill) =>
+        skill.id === skillId ? { ...skill, ...updatedFields } : skill,
+      ),
+    );
+    setOpenedQuests((currentQuests) =>
+      currentQuests.map((quest) =>
+        quest.id === skillId ? { ...quest, ...updatedFields } : quest,
+      ),
+    );
+  };
+
+  const handleDeleteSkill = (skillId: string) => {
+    setSkills((currentSkills) =>
+      currentSkills.filter((skill) => skill.id !== skillId),
+    );
+    setOpenedQuests((currentQuests) =>
+      currentQuests.filter((quest) => quest.id !== skillId),
+    );
+    setTeachingCount((currentTeaching) => Math.max(0, currentTeaching - 1));
   };
 
   if (phase === "loading") {
@@ -294,9 +349,12 @@ function App() {
       case "teach":
         return (
           <TeachPage
+            openedQuests={openedQuests}
             requests={incomingRequests}
             rewards={visibleRewards}
             onAddSkill={handleAddSkill}
+            onDeleteSkill={handleDeleteSkill}
+            onUpdateSkill={handleUpdateSkill}
           />
         );
       case "wallet":
