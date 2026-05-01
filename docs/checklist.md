@@ -2,10 +2,10 @@
 
 ## Setup
 
-- [ ] Scaffold React + Vite app
-- [ ] Install Tailwind CSS
-- [ ] Install icon library
-- [ ] Create source folder structure
+- [x] Scaffold React + Vite app
+- [x] Install Tailwind CSS
+- [x] Install icon library
+- [x] Create source folder structure
 - [ ] Add mock data
 
 ## UI
