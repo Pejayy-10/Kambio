@@ -23,6 +23,15 @@ export type Skill = {
   nextSlot: string;
 };
 
+export type SkillListingInput = {
+  title: string;
+  category: string;
+  credits: number;
+  format: Skill["format"];
+  level: Skill["level"];
+  description: string;
+};
+
 export type EarnTask = {
   id: string;
   title: string;

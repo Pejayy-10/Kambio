@@ -7,11 +7,12 @@ type MarketplacePageProps = {
   onSelectSkill: (skill: Skill) => void;
 };
 
-const categories = ["All", "Design", "Productivity", "Communication"];
-
 function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const categories = useMemo(() => {
+    return ["All", ...Array.from(new Set(skills.map((skill) => skill.category)))];
+  }, [skills]);
 
   const filteredSkills = useMemo(() => {
     return skills.filter((skill) => {
