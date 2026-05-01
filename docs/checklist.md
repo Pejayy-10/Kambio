@@ -6,19 +6,19 @@
 - [x] Install Tailwind CSS
 - [x] Install icon library
 - [x] Create source folder structure
-- [ ] Add mock data
+- [x] Add mock data
 
 ## UI
 
-- [ ] Mobile app shell
-- [ ] Header with credit balance
-- [ ] Bottom navigation
-- [ ] Dashboard screen
-- [ ] Marketplace screen
+- [x] Mobile app shell
+- [x] Header with credit balance
+- [x] Bottom navigation
+- [x] Dashboard screen
+- [x] Marketplace screen
 - [ ] Skill detail screen
-- [ ] Offer skill form
-- [ ] Earn credits/tasks screen
-- [ ] Wallet screen
+- [x] Offer skill form
+- [x] Earn credits/tasks screen
+- [x] Wallet screen
 
 ## Interactions
 
