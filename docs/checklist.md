@@ -22,6 +22,10 @@
 - [x] Offer skill form
 - [x] Earn credits/tasks screen
 - [x] Wallet screen
+- [x] Exchange delivery model UI
+- [x] Progress tracking UI
+- [x] Teaching requests UI
+- [x] Non-credit rewards UI
 
 ## Interactions
 
