@@ -91,6 +91,57 @@ export const featuredSkills: Skill[] = [
   },
 ];
 
+export const userTeachingQuests: Skill[] = [
+  {
+    id: "quest-branding",
+    title: "Brand moodboard feedback",
+    category: "Design",
+    teacher: currentUser.name,
+    rating: 4.8,
+    duration: "30 min",
+    credits: 10,
+    format: "Async",
+    level: "Intermediate",
+    description:
+      "Review a learner's moodboard and give focused comments on visual direction, hierarchy, and fit.",
+    outcomes: [
+      "Clarify brand direction",
+      "Improve visual consistency",
+      "Receive prioritized feedback notes",
+    ],
+    nextSlot: "Accepting applicants",
+    deliveryType: "Async Help",
+    deliverySummary:
+      "Learner submits their board, then receives written critique and next-step recommendations.",
+    trackingSteps: ["Requested", "Submitted Work", "Completed", "Rated"],
+    rewardNote: "Earn credits, reputation, and visible portfolio proof.",
+  },
+  {
+    id: "quest-slides",
+    title: "Presentation slide cleanup",
+    category: "Communication",
+    teacher: currentUser.name,
+    rating: 4.9,
+    duration: "45 min",
+    credits: 14,
+    format: "Live",
+    level: "Beginner",
+    description:
+      "Help a peer tighten slide structure, visual hierarchy, and speaking flow before a presentation.",
+    outcomes: [
+      "Improve slide flow",
+      "Reduce clutter",
+      "Prepare clearer speaker notes",
+    ],
+    nextSlot: "Today",
+    deliveryType: "Video Call",
+    deliverySummary:
+      "A live review session where learner and teacher clean up slides together.",
+    trackingSteps: ["Requested", "Accepted", "In Progress", "Completed", "Rated"],
+    rewardNote: "Earn credits, helpful mentor progress, and presentation proof.",
+  },
+];
+
 export const earnTasks: EarnTask[] = [
   {
     id: "task-proofread",
