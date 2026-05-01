@@ -15,6 +15,7 @@ import EarnPage from "./pages/EarnPage";
 import LoadingPage from "./pages/LoadingPage";
 import MarketplacePage from "./pages/MarketplacePage";
 import OnboardingPage from "./pages/OnboardingPage";
+import ProfilePage from "./pages/ProfilePage";
 import SkillDetailPage from "./pages/SkillDetailPage";
 import TeachPage from "./pages/TeachPage";
 import WalletPage from "./pages/WalletPage";
@@ -47,6 +48,10 @@ const pageMeta: Omit<Record<TabId, { title: string; subtitle: string }>, "dashbo
   wallet: {
     title: "Wallet",
     subtitle: "Track your credit movement",
+  },
+  profile: {
+    title: "Profile",
+    subtitle: "Ratings, badges, and rank",
   },
 };
 
@@ -298,6 +303,18 @@ function App() {
         return (
           <WalletPage
             credits={credits}
+            transactions={transactions}
+          />
+        );
+      case "profile":
+        return (
+          <ProfilePage
+            completed={completedCount}
+            credits={credits}
+            learning={learningCount}
+            profile={profile}
+            rewards={visibleRewards}
+            teaching={teachingCount}
             transactions={transactions}
           />
         );

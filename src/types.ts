@@ -1,6 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 
-export type TabId = "dashboard" | "marketplace" | "earn" | "teach" | "wallet";
+export type TabId =
+  | "dashboard"
+  | "marketplace"
+  | "earn"
+  | "teach"
+  | "wallet"
+  | "profile";
 
 export type NavItem = {
   id: TabId;

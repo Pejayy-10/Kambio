@@ -6,9 +6,9 @@ type CreditBadgeProps = {
 
 function CreditBadge({ credits }: CreditBadgeProps) {
   return (
-    <div className="flex h-10 items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 text-amber-950">
-      <Coins size={17} aria-hidden="true" />
-      <span className="text-sm font-semibold">{credits}</span>
+    <div className="bob flex h-12 shrink-0 items-center gap-2 rounded-2xl border border-amber-300 bg-gradient-to-br from-amber-200 to-lime-200 px-3 text-slate-950 shadow-[0_5px_0_#172033]">
+      <Coins size={18} aria-hidden="true" />
+      <span className="text-base font-black">{credits}</span>
     </div>
   );
 }
