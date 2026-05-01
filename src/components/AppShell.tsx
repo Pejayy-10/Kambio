@@ -30,15 +30,15 @@ function AppShell({
   onTabChange,
 }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-stone-100 text-slate-950">
-      <div className="mx-auto min-h-screen w-full max-w-md bg-stone-50 shadow-sm">
-        <header className="sticky top-0 z-10 border-b border-stone-200 bg-stone-50/95 px-5 pb-4 pt-5 backdrop-blur">
+    <div className="min-h-screen bg-stone-200 text-slate-950 antialiased">
+      <div className="mx-auto min-h-screen w-full max-w-md border-x border-stone-200 bg-stone-50 shadow-sm">
+        <header className="sticky top-0 z-10 border-b border-stone-200 bg-stone-50/95 px-5 pb-4 pt-[max(env(safe-area-inset-top),1.25rem)] backdrop-blur">
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <p className="text-xs font-semibold uppercase text-emerald-700">
                 Kambio
               </p>
-              <h1 className="mt-1 text-2xl font-semibold tracking-normal">
+              <h1 className="mt-1 text-balance text-2xl font-semibold tracking-normal">
                 {title}
               </h1>
               <p className="mt-1 text-sm text-slate-500">{subtitle}</p>
@@ -47,7 +47,9 @@ function AppShell({
           </div>
         </header>
 
-        <main className="px-5 pb-28 pt-5">{children}</main>
+        <main className="min-h-[calc(100vh-7rem)] px-5 pb-28 pt-5">
+          {children}
+        </main>
       </div>
 
       <BottomNavigation

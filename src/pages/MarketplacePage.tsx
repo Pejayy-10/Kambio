@@ -1,5 +1,6 @@
-import { Search, Star } from "lucide-react";
+import { Search, SearchX, Star } from "lucide-react";
 import { useMemo, useState } from "react";
+import EmptyState from "../components/EmptyState";
 import type { Skill } from "../types";
 
 type MarketplacePageProps = {
@@ -11,7 +12,10 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const categories = useMemo(() => {
-    return ["All", ...Array.from(new Set(skills.map((skill) => skill.category)))];
+    return [
+      "All",
+      ...Array.from(new Set(skills.map((skill) => skill.category))),
+    ];
   }, [skills]);
 
   const filteredSkills = useMemo(() => {
@@ -28,7 +32,7 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
 
   return (
     <div className="space-y-4">
-      <label className="flex h-11 items-center gap-3 rounded-lg border border-stone-200 bg-white px-3 text-slate-500">
+      <label className="flex h-11 items-center gap-3 rounded-lg border border-stone-200 bg-white px-3 text-slate-500 shadow-sm shadow-stone-200/50">
         <Search size={18} aria-hidden="true" />
         <input
           className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
@@ -43,18 +47,18 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
           const isActive = category === activeCategory;
 
           return (
-          <button
-            key={category}
-            className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${
-              isActive
-                ? "border-slate-950 bg-slate-950 text-white"
-                : "border-stone-200 bg-white text-slate-600"
-            }`}
-            type="button"
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </button>
+            <button
+              key={category}
+              className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${
+                isActive
+                  ? "border-slate-950 bg-slate-950 text-white"
+                  : "border-stone-200 bg-white text-slate-600"
+              }`}
+              type="button"
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </button>
           );
         })}
       </div>
@@ -63,7 +67,7 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
         {filteredSkills.map((skill) => (
           <article
             key={skill.id}
-            className="rounded-lg border border-stone-200 bg-white p-4"
+            className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -98,12 +102,11 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
       </section>
 
       {filteredSkills.length === 0 ? (
-        <section className="rounded-lg border border-dashed border-stone-300 bg-white p-5 text-center">
-          <p className="text-sm font-semibold">No matching skills</p>
-          <p className="mt-1 text-sm text-slate-500">
-            Try a different search or category.
-          </p>
-        </section>
+        <EmptyState
+          icon={SearchX}
+          title="No matching skills"
+          description="Try a different search term or category filter."
+        />
       ) : null}
     </div>
   );

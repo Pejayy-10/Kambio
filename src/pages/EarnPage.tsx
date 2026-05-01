@@ -8,15 +8,28 @@ type EarnPageProps = {
 };
 
 function EarnPage({ completedTaskIds, tasks, onCompleteTask }: EarnPageProps) {
+  const allTasksCompleted = completedTaskIds.length === tasks.length;
+
   return (
     <div className="space-y-3">
+      {allTasksCompleted ? (
+        <section className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+          <p className="text-sm font-semibold text-emerald-900">
+            All available tasks are complete.
+          </p>
+          <p className="mt-1 text-sm leading-6 text-emerald-800">
+            Your earned credits were added to the wallet for this demo session.
+          </p>
+        </section>
+      ) : null}
+
       {tasks.map((task) => {
         const isCompleted = completedTaskIds.includes(task.id);
 
         return (
           <article
             key={task.id}
-            className="rounded-lg border border-stone-200 bg-white p-4"
+            className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
           >
             <div className="flex items-start gap-3">
               <div

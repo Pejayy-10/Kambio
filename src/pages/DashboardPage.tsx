@@ -26,7 +26,7 @@ function DashboardPage({
         <MetricCard label="Done" value={completed} accent="bg-amber-500" />
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-slate-950">
