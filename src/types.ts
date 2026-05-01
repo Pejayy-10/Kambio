@@ -17,6 +17,10 @@ export type Skill = {
   duration: string;
   credits: number;
   format: "Live" | "Async" | "Hybrid";
+  level: "Beginner" | "Intermediate" | "Advanced";
+  description: string;
+  outcomes: string[];
+  nextSlot: string;
 };
 
 export type EarnTask = {
