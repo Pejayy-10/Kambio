@@ -1,18 +1,79 @@
+import { useMemo, useState } from "react";
+import AppShell from "./components/AppShell";
+import { currentUser, earnTasks, featuredSkills, recentTransactions } from "./data/mockData";
+import DashboardPage from "./pages/DashboardPage";
+import EarnPage from "./pages/EarnPage";
+import MarketplacePage from "./pages/MarketplacePage";
+import TeachPage from "./pages/TeachPage";
+import WalletPage from "./pages/WalletPage";
+import type { TabId } from "./types";
+
+const pageMeta: Record<TabId, { title: string; subtitle: string }> = {
+  dashboard: {
+    title: `Hi, ${currentUser.name}`,
+    subtitle: "Your skill exchange overview",
+  },
+  marketplace: {
+    title: "Find skills",
+    subtitle: "Spend credits with trusted peers",
+  },
+  earn: {
+    title: "Earn credits",
+    subtitle: "Complete useful community tasks",
+  },
+  teach: {
+    title: "Teach",
+    subtitle: "Share what you can help with",
+  },
+  wallet: {
+    title: "Wallet",
+    subtitle: "Track your credit movement",
+  },
+};
+
 function App() {
+  const [activeTab, setActiveTab] = useState<TabId>("dashboard");
+  const meta = pageMeta[activeTab];
+
+  const activePage = useMemo(() => {
+    switch (activeTab) {
+      case "marketplace":
+        return <MarketplacePage skills={featuredSkills} />;
+      case "earn":
+        return <EarnPage tasks={earnTasks} />;
+      case "teach":
+        return <TeachPage />;
+      case "wallet":
+        return (
+          <WalletPage
+            credits={currentUser.credits}
+            transactions={recentTransactions}
+          />
+        );
+      case "dashboard":
+      default:
+        return (
+          <DashboardPage
+            completed={currentUser.completed}
+            learning={currentUser.learning}
+            teaching={currentUser.teaching}
+            skills={featuredSkills}
+            transactions={recentTransactions}
+          />
+        );
+    }
+  }, [activeTab]);
+
   return (
-    <main className="min-h-screen bg-stone-50 text-slate-950">
-      <section className="mx-auto flex min-h-screen w-full max-w-md flex-col px-5 py-6">
-        <p className="text-sm font-medium uppercase tracking-wide text-emerald-700">
-          Kambio
-        </p>
-        <h1 className="mt-3 text-3xl font-semibold">Skill credits for flexible exchange.</h1>
-        <p className="mt-4 text-base leading-7 text-slate-600">
-          Mobile-first prototype scaffold is ready. The next feature commit will
-          replace this with the dashboard, marketplace, wallet, and bottom
-          navigation.
-        </p>
-      </section>
-    </main>
+    <AppShell
+      activeTab={activeTab}
+      credits={currentUser.credits}
+      title={meta.title}
+      subtitle={meta.subtitle}
+      onTabChange={setActiveTab}
+    >
+      {activePage}
+    </AppShell>
   );
 }
 
