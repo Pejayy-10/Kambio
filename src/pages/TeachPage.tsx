@@ -1,8 +1,15 @@
-import { Plus } from "lucide-react";
+import { BookOpen, Inbox, MapPin, MessageSquare, Plus, Trophy, Video } from "lucide-react";
 import { type FormEvent, useState } from "react";
-import type { Skill, SkillListingInput } from "../types";
+import type {
+  DeliveryType,
+  RewardStat,
+  SkillListingInput,
+  TeachingRequest,
+} from "../types";
 
 type TeachPageProps = {
+  requests: TeachingRequest[];
+  rewards: RewardStat[];
   onAddSkill: (listing: SkillListingInput) => void;
 };
 
@@ -10,12 +17,44 @@ const initialForm: SkillListingInput = {
   title: "",
   category: "Design",
   credits: 12,
-  format: "Async",
+  deliveryType: "Async Help",
   level: "Beginner",
   description: "",
 };
 
-function TeachPage({ onAddSkill }: TeachPageProps) {
+const deliveryOptions: Array<{
+  type: DeliveryType;
+  label: string;
+  description: string;
+  icon: typeof MessageSquare;
+}> = [
+  {
+    type: "Async Help",
+    label: "Async",
+    description: "Learner submits work, teacher replies later.",
+    icon: MessageSquare,
+  },
+  {
+    type: "Video Call",
+    label: "Video",
+    description: "Scheduled tutoring with live conversation.",
+    icon: Video,
+  },
+  {
+    type: "Face-to-Face",
+    label: "In person",
+    description: "Campus or community tutorial session.",
+    icon: MapPin,
+  },
+  {
+    type: "Mini Course",
+    label: "Course",
+    description: "Lessons, checkpoints, and final task.",
+    icon: BookOpen,
+  },
+];
+
+function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
   const [form, setForm] = useState<SkillListingInput>(initialForm);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -62,6 +101,107 @@ function TeachPage({ onAddSkill }: TeachPageProps) {
         </div>
       </section>
 
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-semibold">Delivery options</h2>
+          <span className="text-xs font-medium text-slate-500">
+            Choose one
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {deliveryOptions.map((option) => {
+            const Icon = option.icon;
+            const isActive = option.type === form.deliveryType;
+
+            return (
+              <button
+                key={option.type}
+                type="button"
+                className={`rounded-lg border p-3 text-left ${
+                  isActive
+                    ? "border-slate-950 bg-slate-950 text-white"
+                    : "border-stone-200 bg-white text-slate-700"
+                }`}
+                onClick={() => updateField("deliveryType", option.type)}
+              >
+                <Icon size={18} aria-hidden="true" />
+                <p className="mt-2 text-sm font-semibold">{option.label}</p>
+                <p
+                  className={`mt-1 text-xs leading-5 ${
+                    isActive ? "text-slate-300" : "text-slate-500"
+                  }`}
+                >
+                  {option.description}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+        <div className="mb-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Inbox size={18} className="text-slate-500" aria-hidden="true" />
+            <h2 className="text-base font-semibold">Teaching requests</h2>
+          </div>
+          <span className="text-xs font-medium text-slate-500">
+            {requests.length}
+          </span>
+        </div>
+        <div className="space-y-2">
+          {requests.slice(0, 3).map((request) => (
+            <article
+              key={request.id}
+              className="rounded-lg border border-stone-200 bg-stone-50 p-3"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold">{request.skillTitle}</p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {request.learner} / {request.deliveryType}
+                  </p>
+                </div>
+                <span className="rounded-lg bg-white px-2 py-1 text-xs font-semibold text-slate-600">
+                  {request.status}
+                </span>
+              </div>
+              <p className="mt-2 text-xs leading-5 text-emerald-700">
+                {request.rewardPreview}
+              </p>
+              <p className="mt-1 text-xs text-slate-500">
+                {request.requestedAt}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+        <div className="mb-3 flex items-center gap-2">
+          <Trophy size={18} className="text-amber-700" aria-hidden="true" />
+          <h2 className="text-base font-semibold">Rewards beyond credits</h2>
+        </div>
+        <div className="space-y-2">
+          {rewards.map((reward) => (
+            <div
+              key={reward.id}
+              className="flex items-start justify-between gap-3 rounded-lg bg-stone-50 p-3"
+            >
+              <div>
+                <p className="text-sm font-semibold">{reward.label}</p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  {reward.description}
+                </p>
+              </div>
+              <span className="text-sm font-semibold text-slate-950">
+                {reward.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <form
         className="space-y-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
         onSubmit={handleSubmit}
@@ -95,40 +235,25 @@ function TeachPage({ onAddSkill }: TeachPageProps) {
           </select>
         </label>
 
-        <div className="grid grid-cols-2 gap-3">
-          <label className="block">
-            <span className="text-xs font-semibold uppercase text-slate-500">
-              Format
-            </span>
-            <select
-              className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm outline-none focus:border-emerald-600"
-              value={form.format}
-              onChange={(event) =>
-                updateField("format", event.target.value as Skill["format"])
-              }
-            >
-              <option>Async</option>
-              <option>Live</option>
-              <option>Hybrid</option>
-            </select>
-          </label>
-          <label className="block">
-            <span className="text-xs font-semibold uppercase text-slate-500">
-              Level
-            </span>
-            <select
-              className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm outline-none focus:border-emerald-600"
-              value={form.level}
-              onChange={(event) =>
-                updateField("level", event.target.value as Skill["level"])
-              }
-            >
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </label>
-        </div>
+        <label className="block">
+          <span className="text-xs font-semibold uppercase text-slate-500">
+            Level
+          </span>
+          <select
+            className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm outline-none focus:border-emerald-600"
+            value={form.level}
+            onChange={(event) =>
+              updateField(
+                "level",
+                event.target.value as SkillListingInput["level"],
+              )
+            }
+          >
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </label>
 
         <label className="block">
           <span className="text-xs font-semibold uppercase text-slate-500">

@@ -1,4 +1,11 @@
-import type { EarnTask, Skill, Transaction } from "../types";
+import type {
+  EarnTask,
+  LearningProgress,
+  RewardStat,
+  Skill,
+  TeachingRequest,
+  Transaction,
+} from "../types";
 
 export const currentUser = {
   name: "Mika",
@@ -28,6 +35,11 @@ export const featuredSkills: Skill[] = [
       "Receive prioritized action notes",
     ],
     nextSlot: "Available today",
+    deliveryType: "Async Help",
+    deliverySummary:
+      "Learner uploads a screen or Figma link, then receives structured written feedback within the day.",
+    trackingSteps: ["Requested", "Submitted Work", "Completed", "Rated"],
+    rewardNote: "Earn credits, a critique badge, and visible portfolio proof.",
   },
   {
     id: "skill-excel",
@@ -47,6 +59,11 @@ export const featuredSkills: Skill[] = [
       "Build a simple report table",
     ],
     nextSlot: "Tomorrow, 4:00 PM",
+    deliveryType: "Video Call",
+    deliverySummary:
+      "A scheduled live tutoring call with shared-screen walkthrough and a short practice file.",
+    trackingSteps: ["Requested", "Accepted", "In Progress", "Completed", "Rated"],
+    rewardNote: "Earn credits, reputation, and fast-responder progress.",
   },
   {
     id: "skill-speaking",
@@ -66,6 +83,11 @@ export const featuredSkills: Skill[] = [
       "Get confidence notes",
     ],
     nextSlot: "Friday, 2:30 PM",
+    deliveryType: "Face-to-Face",
+    deliverySummary:
+      "Meet on campus or in a shared community space for live practice and peer feedback.",
+    trackingSteps: ["Requested", "Accepted", "In Progress", "Completed", "Rated"],
+    rewardNote: "Earn credits, mentor reputation, and teaching history.",
   },
 ];
 
@@ -114,5 +136,68 @@ export const recentTransactions: Transaction[] = [
     type: "earned",
     amount: 12,
     time: "Apr 29",
+  },
+];
+
+export const rewardStats: RewardStat[] = [
+  {
+    id: "reward-credits",
+    label: "Credits",
+    value: "42",
+    description: "Spendable balance earned from tasks and teaching.",
+  },
+  {
+    id: "reward-reputation",
+    label: "Reputation",
+    value: "4.8",
+    description: "Trust score from completed learner feedback.",
+  },
+  {
+    id: "reward-badges",
+    label: "Badges",
+    value: "3",
+    description: "Recognition for helpful, reliable contributions.",
+  },
+];
+
+export const learningProgress: LearningProgress[] = [
+  {
+    id: "progress-excel",
+    skillTitle: "Excel formulas for reports",
+    teacher: "Ken Tan",
+    deliveryType: "Video Call",
+    status: "Accepted",
+    progress: 40,
+    nextAction: "Join call tomorrow at 4:00 PM",
+  },
+  {
+    id: "progress-portfolio",
+    skillTitle: "Portfolio review",
+    teacher: "Nina Cruz",
+    deliveryType: "Async Help",
+    status: "Submitted Work",
+    progress: 70,
+    nextAction: "Waiting for feedback notes",
+  },
+];
+
+export const teachingRequests: TeachingRequest[] = [
+  {
+    id: "request-branding",
+    learner: "Jio Santos",
+    skillTitle: "Brand moodboard feedback",
+    deliveryType: "Async Help",
+    status: "Requested",
+    rewardPreview: "+10 credits / reputation / portfolio proof",
+    requestedAt: "12 min ago",
+  },
+  {
+    id: "request-slides",
+    learner: "Rae Lim",
+    skillTitle: "Presentation slide cleanup",
+    deliveryType: "Video Call",
+    status: "Accepted",
+    rewardPreview: "+14 credits / helpful mentor badge progress",
+    requestedAt: "Today",
   },
 ];
