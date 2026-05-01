@@ -3,6 +3,7 @@ import {
   ClipboardList,
   Edit3,
   Inbox,
+  Layers,
   MapPin,
   MessageSquare,
   Plus,
@@ -27,6 +28,7 @@ type TeachPageProps = {
   requests: TeachingRequest[];
   rewards: RewardStat[];
   onAddSkill: (listing: SkillListingInput) => void;
+  onAcceptApplicant: (requestId: string) => void;
   onDeleteSkill: (skillId: string) => void;
   onUpdateSkill: (skillId: string, listing: SkillListingInput) => void;
 };
@@ -100,6 +102,7 @@ function TeachPage({
   requests,
   rewards,
   onAddSkill,
+  onAcceptApplicant,
   onDeleteSkill,
   onUpdateSkill,
 }: TeachPageProps) {
@@ -107,6 +110,8 @@ function TeachPage({
   const [form, setForm] = useState<SkillListingInput>(initialForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [selectedApplicant, setSelectedApplicant] =
+    useState<TeachingRequest | null>(null);
   const questTitles = useMemo(
     () => new Set(openedQuests.map((quest) => quest.title)),
     [openedQuests],
@@ -173,6 +178,24 @@ function TeachPage({
     setMessage("Quest deleted.");
   };
 
+  const acceptApplicant = (request: TeachingRequest) => {
+    if (request.status !== "Requested") {
+      return;
+    }
+
+    onAcceptApplicant(request.id);
+    setMessage(`${request.learner} was accepted for ${request.skillTitle}.`);
+    setSelectedApplicant((currentApplicant) =>
+      currentApplicant?.id === request.id
+        ? {
+            ...currentApplicant,
+            status: "Accepted",
+            requestedAt: "Accepted just now",
+          }
+        : currentApplicant,
+    );
+  };
+
   return (
     <div className="space-y-4">
       <section className="quest-card-dark float-in rounded-3xl p-5 text-white">
@@ -206,6 +229,7 @@ function TeachPage({
               onClick={() => {
                 setActiveView(option.id);
                 setMessage(null);
+                setSelectedApplicant(null);
               }}
             >
               <Icon size={18} aria-hidden="true" />
@@ -309,37 +333,19 @@ function TeachPage({
           ) : null}
 
           {questApplicants.map((request) => (
-            <article key={request.id} className="quest-card rounded-3xl p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-sm font-black">{request.skillTitle}</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">
-                    {request.learner} / {request.deliveryType}
-                  </p>
-                </div>
-                <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-black text-amber-800">
-                  {request.status}
-                </span>
-              </div>
-              <p className="mt-3 text-xs font-bold leading-5 text-teal-700">
-                {request.rewardPreview}
-              </p>
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  className="quest-button rounded-2xl px-3 py-3 text-sm font-black"
-                >
-                  Accept
-                </button>
-                <button
-                  type="button"
-                  className="rounded-2xl border border-slate-950/10 bg-white/75 px-3 py-3 text-sm font-black text-slate-700"
-                >
-                  View
-                </button>
-              </div>
-            </article>
+            <ApplicantCard
+              key={request.id}
+              request={request}
+              onAccept={() => acceptApplicant(request)}
+              onView={() => setSelectedApplicant(request)}
+            />
           ))}
+
+          {message ? (
+            <div className="rounded-2xl bg-teal-100 px-3 py-2 text-sm font-bold text-teal-800">
+              {message}
+            </div>
+          ) : null}
         </section>
       ) : null}
 
@@ -359,6 +365,169 @@ function TeachPage({
           ))}
         </div>
       </section>
+
+      {selectedApplicant ? (
+        <ApplicantModal
+          request={selectedApplicant}
+          onAccept={() => acceptApplicant(selectedApplicant)}
+          onClose={() => setSelectedApplicant(null)}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+type ApplicantCardProps = {
+  request: TeachingRequest;
+  onAccept: () => void;
+  onView: () => void;
+};
+
+function ApplicantCard({ request, onAccept, onView }: ApplicantCardProps) {
+  const isAccepted = request.status === "Accepted";
+  const canAccept = request.status === "Requested";
+
+  return (
+    <article className="quest-card rounded-3xl p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-sm font-black">{request.skillTitle}</p>
+          <p className="mt-1 text-xs font-medium text-slate-500">
+            {request.learner} / {request.deliveryType}
+          </p>
+        </div>
+        <span
+          className={`rounded-full px-2 py-1 text-xs font-black ${
+            isAccepted
+              ? "bg-teal-100 text-teal-800"
+              : "bg-amber-100 text-amber-800"
+          }`}
+        >
+          {request.status}
+        </span>
+      </div>
+      <p className="mt-3 text-xs font-bold leading-5 text-teal-700">
+        {request.rewardPreview}
+      </p>
+      <p className="mt-1 text-xs font-medium text-slate-500">
+        {request.requestedAt}
+      </p>
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          className={`rounded-2xl px-3 py-3 text-sm font-black ${
+            canAccept ? "quest-button" : "bg-slate-200 text-slate-500"
+          }`}
+          disabled={!canAccept}
+          onClick={onAccept}
+        >
+          {isAccepted ? "Accepted" : "Accept"}
+        </button>
+        <button
+          type="button"
+          className="rounded-2xl border border-slate-950/10 bg-white/75 px-3 py-3 text-sm font-black text-slate-700"
+          onClick={onView}
+        >
+          View
+        </button>
+      </div>
+    </article>
+  );
+}
+
+type ApplicantModalProps = {
+  request: TeachingRequest;
+  onAccept: () => void;
+  onClose: () => void;
+};
+
+function ApplicantModal({ request, onAccept, onClose }: ApplicantModalProps) {
+  const canAccept = request.status === "Requested";
+
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/45 px-4 pb-4 backdrop-blur-sm">
+      <section className="w-full max-w-md rounded-3xl border border-white/40 bg-[#fffaf0] p-5 shadow-2xl">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-black uppercase text-teal-700">
+              Applicant profile
+            </p>
+            <h2 className="mt-1 text-xl font-black">{request.learner}</h2>
+            <p className="mt-1 text-sm font-medium text-slate-500">
+              Applied for {request.skillTitle}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-600"
+            onClick={onClose}
+            aria-label="Close applicant details"
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <DetailPill label="Status" value={request.status} />
+          <DetailPill label="Format" value={request.deliveryType} />
+        </div>
+
+        <div className="mt-4 rounded-2xl bg-white/75 p-4">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700">
+              <Layers size={18} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-sm font-black">Placeholder details</p>
+              <p className="mt-1 text-sm font-medium leading-6 text-slate-600">
+                This modal is wired to the selected applicant. A future backend
+                can show learner notes, uploaded files, schedule preferences,
+                and chat history here.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p className="mt-4 rounded-2xl bg-amber-100 px-3 py-2 text-xs font-bold leading-5 text-amber-900">
+          {request.rewardPreview}
+        </p>
+
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            className={`rounded-2xl px-3 py-3 text-sm font-black ${
+              canAccept ? "quest-button" : "bg-slate-200 text-slate-500"
+            }`}
+            disabled={!canAccept}
+            onClick={onAccept}
+          >
+            {canAccept ? "Accept applicant" : "Already accepted"}
+          </button>
+          <button
+            type="button"
+            className="rounded-2xl border border-slate-950/10 bg-white/75 px-3 py-3 text-sm font-black text-slate-700"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+type DetailPillProps = {
+  label: string;
+  value: string;
+};
+
+function DetailPill({ label, value }: DetailPillProps) {
+  return (
+    <div className="reward-chip rounded-2xl p-3">
+      <p className="text-[0.68rem] font-black uppercase text-slate-500">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-black text-slate-900">{value}</p>
     </div>
   );
 }

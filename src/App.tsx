@@ -301,6 +301,20 @@ function App() {
     setTeachingCount((currentTeaching) => Math.max(0, currentTeaching - 1));
   };
 
+  const handleAcceptApplicant = (requestId: string) => {
+    setIncomingRequests((currentRequests) =>
+      currentRequests.map((request) =>
+        request.id === requestId
+          ? {
+              ...request,
+              status: "Accepted",
+              requestedAt: "Accepted just now",
+            }
+          : request,
+      ),
+    );
+  };
+
   if (phase === "loading") {
     return <LoadingPage />;
   }
@@ -353,6 +367,7 @@ function App() {
             requests={incomingRequests}
             rewards={visibleRewards}
             onAddSkill={handleAddSkill}
+            onAcceptApplicant={handleAcceptApplicant}
             onDeleteSkill={handleDeleteSkill}
             onUpdateSkill={handleUpdateSkill}
           />

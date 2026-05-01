@@ -77,6 +77,9 @@ This repository uses:
 
 See `docs/git-workflow.md` for the full team workflow.
 
+For teammate handoff and implementation guidance, see
+`docs/continuation-guide.md`.
+
 ## Notes
 
 Kambio is frontend-only. There is no authentication, database, API, or permanent persistence. Temporary changes reset when the browser refreshes, which is intentional for the thesis presentation prototype.
