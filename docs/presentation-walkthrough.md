@@ -15,13 +15,22 @@ Users can earn credits first, then spend them later with someone else.
 ## 3. Demo Flow
 
 1. Show the dashboard and current credit balance.
-2. Open the marketplace and browse skills.
-3. Select a skill and request a learning session.
-4. Show the credit deduction and transaction update.
-5. Complete a micro-task to earn credits.
-6. Add a new skill listing to demonstrate temporary frontend state.
-7. Return to the marketplace and show the new listing.
+2. Open Skills and use search or category filters.
+3. Select a skill to open the detail screen.
+4. Request the learning session and show the credit deduction.
+5. Open Wallet to show the new spent transaction.
+6. Open Earn and complete a micro-task.
+7. Show the increased credit balance and earned transaction.
+8. Open Teach and add a new skill listing.
+9. Return to Skills and show the temporary listing at the top.
 
 ## 4. Key Message
 
 Kambio demonstrates how an asynchronous credit system can make peer-to-peer skill exchange more flexible than direct barter.
+
+## 5. Presenter Notes
+
+- Refreshing the app resets temporary demo state.
+- The prototype is intentionally frontend-only.
+- Credit changes, completed tasks, and added listings are simulated with React state.
+- The strongest narrative is: earn credits first, spend them later with a different person.

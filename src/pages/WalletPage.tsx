@@ -1,4 +1,5 @@
-import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, ReceiptText } from "lucide-react";
+import EmptyState from "../components/EmptyState";
 import type { Transaction } from "../types";
 
 type WalletPageProps = {
@@ -28,6 +29,14 @@ function WalletPage({ credits, transactions }: WalletPageProps) {
       </section>
 
       <section className="space-y-2">
+        {transactions.length === 0 ? (
+          <EmptyState
+            icon={ReceiptText}
+            title="No credit movement yet"
+            description="Completed tasks and requested sessions will appear here."
+          />
+        ) : null}
+
         {transactions.map((transaction) => {
           const isEarned = transaction.type === "earned";
           const Icon = isEarned ? ArrowDownLeft : ArrowUpRight;

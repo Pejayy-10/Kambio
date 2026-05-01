@@ -32,9 +32,9 @@
 
 ## Presentation Readiness
 
-- [ ] Mobile viewport looks polished
-- [ ] Main flows work without backend
-- [ ] Demo data is realistic
-- [ ] Empty states are present
-- [ ] README matches actual project
-- [ ] Final walkthrough path is documented
+- [x] Mobile viewport looks polished
+- [x] Main flows work without backend
+- [x] Demo data is realistic
+- [x] Empty states are present
+- [x] README matches actual project
+- [x] Final walkthrough path is documented

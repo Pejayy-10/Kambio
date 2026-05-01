@@ -1,134 +1,76 @@
-<!-- Kambio README -->
+# Kambio
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,100:111827&height=200&section=header&text=Kambio&fontColor=ffffff&fontSize=40&animation=fadeIn" />
-</p>
+Kambio is a mobile-first frontend prototype for an asynchronous peer-to-peer skill exchange platform.
 
-<p align="center">
-  <b>Asynchronous Skill Exchange Prototype</b><br/>
-  <sub>Learn · Teach · Earn</sub>
-</p>
+The project explores a credit-based alternative to direct bartering. Instead of requiring two people to want each other's skills at the same time, users earn skill credits by teaching or completing micro-tasks, then spend those credits to learn from others.
 
----
+## Prototype Scope
 
-## Overview
+This is a presentation-ready UI prototype. It uses local mock data and React state to simulate a working marketplace, wallet, dashboard, and skill-credit economy without a backend.
 
-Kambio is a frontend prototype exploring a different model for peer-to-peer skill exchange.
+Implemented demo flows:
 
-Instead of relying on direct barter (where two users must need each other's skills at the same time), Kambio introduces a **credit-based system**:
-
-- Earn credits by teaching or completing tasks  
-- Spend credits to learn from others  
-- Enable asynchronous participation across the platform  
-
----
-
-## Interface Preview
-
-<p align="center">
-  <img src="https://via.placeholder.com/900x420/0f172a/ffffff?text=Kambio+Marketplace" width="80%"/>
-</p>
-
----
-
-## Core System
-
-```mermaid
-flowchart LR
-    A[Teach Skill] --> B[Earn Credits]
-    B --> C[Browse Marketplace]
-    C --> D[Select Skill]
-    D --> E[Spend Credits]
-    E --> F[Learn Skill]
-```
-
----
-
-## Features
-
-### Marketplace
-- Structured skill listings  
-- Provider profiles  
-- Simulated browsing experience  
-
-### Credit Economy
-- Earn / spend flow  
-- Balance tracking  
-- UI-driven transactions  
-
-### Dashboard
-- Activity overview  
-- Credit visibility  
-- Learning & teaching states  
-
-### State Simulation
-- Local mock data  
-- React hooks (useState / useEffect)  
-- No backend dependency  
-
----
-
-## Design Approach
-
-The interface is intentionally minimal:
-
-- Geometric layout system  
-- Neutral color palette  
-- Consistent spacing and hierarchy  
-- Focus on clarity over decoration  
-
----
+- Browse skill listings
+- Filter and search the marketplace
+- Open a skill detail screen
+- Request a session and spend credits
+- Complete micro-tasks and earn credits
+- Add a temporary skill listing
+- View updated wallet and transaction activity
 
 ## Tech Stack
 
-- **Frontend:** React (hooks-based)
-- **State:** Local state + mock data
-- **Styling:** CSS / Tailwind (optional)
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- lucide-react
+- Local mock data and React hooks
 
----
-
-## Project Structure
-
-```
-src/
-├── components/
-├── pages/
-├── data/
-├── hooks/
-└── styles/
-```
-
----
-
-## Setup
+## Getting Started
 
 ```bash
-git clone https://github.com/your-username/kambio.git
-cd kambio
 npm install
 npm run dev
 ```
 
----
+The local app normally runs at:
+
+```text
+http://127.0.0.1:5173
+```
+
+## Useful Commands
+
+```bash
+npm run dev
+npm run build
+npm run lint
+```
+
+## Project Structure
+
+```text
+src/
+  components/
+  data/
+  hooks/
+  pages/
+  styles/
+  App.tsx
+  main.tsx
+```
+
+## Version-Control Flow
+
+This repository uses:
+
+- `main` for stable presentation-ready code
+- `dev` for integrated development work
+- `feature/*` branches for focused features
+
+See `docs/git-workflow.md` for the full team workflow.
 
 ## Notes
 
-This is a **frontend-only prototype** built for demonstration and presentation.
-
-No backend services, authentication, or persistence are implemented.
-
----
-
-## Future Direction
-
-- Backend integration  
-- Authentication system  
-- Real-time messaging  
-- Rating & reputation system  
-- Recommendation engine  
-
----
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:111827,100:0f172a&height=120&section=footer"/>
-</p>
+Kambio is frontend-only. There is no authentication, database, API, or permanent persistence. Temporary changes reset when the browser refreshes, which is intentional for the thesis presentation prototype.

@@ -48,7 +48,7 @@ function TeachPage({ onAddSkill }: TeachPageProps) {
 
   return (
     <div className="space-y-4">
-      <section className="rounded-lg border border-stone-200 bg-white p-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
             <Plus size={19} aria-hidden="true" />
@@ -63,7 +63,7 @@ function TeachPage({ onAddSkill }: TeachPageProps) {
       </section>
 
       <form
-        className="space-y-3 rounded-lg border border-stone-200 bg-white p-4"
+        className="space-y-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
         onSubmit={handleSubmit}
       >
         <label className="block">

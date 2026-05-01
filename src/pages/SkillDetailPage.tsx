@@ -32,7 +32,7 @@ function SkillDetailPage({
         Back
       </button>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="rounded-lg bg-stone-100 px-2 py-1 text-xs font-semibold text-slate-600">
@@ -56,7 +56,7 @@ function SkillDetailPage({
         </div>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
         <h3 className="text-base font-semibold">What you will get</h3>
         <p className="mt-2 text-sm leading-6 text-slate-600">
           {skill.description}
@@ -75,7 +75,7 @@ function SkillDetailPage({
         </ul>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700">
             <CalendarClock size={18} aria-hidden="true" />

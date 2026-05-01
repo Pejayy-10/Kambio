@@ -8,8 +8,8 @@ type BottomNavigationProps = {
 
 function BottomNavigation({ activeTab, items, onChange }: BottomNavigationProps) {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-stone-200 bg-white/95 px-3 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-2 backdrop-blur">
-      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
+    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-stone-200 bg-white/95 px-3 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-2 shadow-[0_-8px_24px_rgba(15,23,42,0.06)] backdrop-blur">
+      <div className="mx-auto grid max-w-md grid-cols-5 gap-1 rounded-xl bg-white">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -18,7 +18,7 @@ function BottomNavigation({ activeTab, items, onChange }: BottomNavigationProps)
             <button
               key={item.id}
               type="button"
-              className={`flex h-14 flex-col items-center justify-center gap-1 rounded-lg text-xs font-medium transition ${
+              className={`flex h-14 flex-col items-center justify-center gap-1 rounded-lg text-xs font-medium transition active:scale-[0.98] ${
                 isActive
                   ? "bg-slate-950 text-white"
                   : "text-slate-500 hover:bg-stone-100 hover:text-slate-950"
