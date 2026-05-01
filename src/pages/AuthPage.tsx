@@ -30,27 +30,27 @@ function AuthPage({ onSubmit }: AuthPageProps) {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100 px-5 text-slate-950">
+    <main className="app-stage min-h-screen px-5 text-slate-950">
       <section className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center py-8">
         <div className="mb-8">
-          <p className="text-sm font-semibold uppercase text-emerald-700">
-            Kambio
+          <p className="text-sm font-black uppercase text-teal-700">
+            Kambio Quest
           </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-tight">
+          <h1 className="mt-3 text-4xl font-black leading-tight">
             {isRegister ? "Create your exchange profile." : "Welcome back."}
           </h1>
-          <p className="mt-3 text-base leading-7 text-slate-600">
+          <p className="mt-3 text-base font-medium leading-7 text-slate-600">
             {isRegister
               ? "Register a demo account to start earning and spending skill credits."
               : "Sign in to continue the frontend-only presentation flow."}
           </p>
         </div>
 
-        <div className="mb-4 grid grid-cols-2 rounded-lg bg-stone-200 p-1">
+        <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-950/10 bg-white/75 p-1 shadow-[0_5px_0_rgba(23,32,51,0.06)]">
           <button
             type="button"
-            className={`h-10 rounded-md text-sm font-semibold ${
-              mode === "login" ? "bg-white text-slate-950 shadow-sm" : "text-slate-500"
+            className={`h-10 rounded-xl text-sm font-black ${
+              mode === "login" ? "bg-slate-950 text-white" : "text-slate-500"
             }`}
             onClick={() => {
               setMode("login");
@@ -61,9 +61,9 @@ function AuthPage({ onSubmit }: AuthPageProps) {
           </button>
           <button
             type="button"
-            className={`h-10 rounded-md text-sm font-semibold ${
+            className={`h-10 rounded-xl text-sm font-black ${
               mode === "register"
-                ? "bg-white text-slate-950 shadow-sm"
+                ? "bg-slate-950 text-white"
                 : "text-slate-500"
             }`}
             onClick={() => {
@@ -76,18 +76,18 @@ function AuthPage({ onSubmit }: AuthPageProps) {
         </div>
 
         <form
-          className="space-y-3 rounded-xl border border-stone-200 bg-white p-4 shadow-sm"
+          className="quest-card space-y-3 rounded-3xl p-4"
           onSubmit={handleSubmit}
         >
           {isRegister ? (
             <label className="block">
-              <span className="text-xs font-semibold uppercase text-slate-500">
+              <span className="text-xs font-black uppercase text-slate-500">
                 Name
               </span>
-              <div className="mt-2 flex h-11 items-center gap-3 rounded-lg border border-stone-200 px-3">
+              <div className="soft-input mt-2 flex h-11 items-center gap-3 rounded-2xl px-3">
                 <UserRound size={17} className="text-slate-400" aria-hidden="true" />
                 <input
-                  className="w-full bg-transparent text-sm outline-none"
+                  className="w-full bg-transparent text-sm font-semibold outline-none"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                 />
@@ -96,13 +96,13 @@ function AuthPage({ onSubmit }: AuthPageProps) {
           ) : null}
 
           <label className="block">
-            <span className="text-xs font-semibold uppercase text-slate-500">
+            <span className="text-xs font-black uppercase text-slate-500">
               Email
             </span>
-            <div className="mt-2 flex h-11 items-center gap-3 rounded-lg border border-stone-200 px-3">
+            <div className="soft-input mt-2 flex h-11 items-center gap-3 rounded-2xl px-3">
               <Mail size={17} className="text-slate-400" aria-hidden="true" />
               <input
-                className="w-full bg-transparent text-sm outline-none"
+                className="w-full bg-transparent text-sm font-semibold outline-none"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -111,11 +111,11 @@ function AuthPage({ onSubmit }: AuthPageProps) {
           </label>
 
           <label className="block">
-            <span className="text-xs font-semibold uppercase text-slate-500">
+            <span className="text-xs font-black uppercase text-slate-500">
               Password
             </span>
             <input
-              className="mt-2 h-11 w-full rounded-lg border border-stone-200 px-3 text-sm outline-none focus:border-emerald-600"
+              className="soft-input mt-2 h-11 w-full rounded-2xl px-3 text-sm font-semibold outline-none focus:border-teal-600"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
@@ -123,14 +123,14 @@ function AuthPage({ onSubmit }: AuthPageProps) {
           </label>
 
           {error ? (
-            <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm font-medium text-rose-800">
+            <p className="rounded-2xl bg-rose-50 px-3 py-2 text-sm font-bold text-rose-800">
               {error}
             </p>
           ) : null}
 
           <button
             type="submit"
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white"
+            className="quest-button flex h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 text-sm font-black"
           >
             {isRegister ? "Create account" : "Login"}
             <ArrowRight size={17} aria-hidden="true" />
@@ -139,7 +139,7 @@ function AuthPage({ onSubmit }: AuthPageProps) {
 
         <button
           type="button"
-          className="mt-4 w-full rounded-lg px-4 py-3 text-sm font-semibold text-slate-500"
+          className="mt-4 w-full rounded-2xl px-4 py-3 text-sm font-black text-slate-500"
           onClick={() => onSubmit({ name: "Mika", email: "demo@kambio.local" })}
         >
           Continue as demo user

@@ -1,4 +1,4 @@
-import { ArrowRight, Clock3, Route, Trophy } from "lucide-react";
+import { ArrowRight, Clock3, Route, Sparkles, Trophy } from "lucide-react";
 import type { LearningProgress, RewardStat, Skill, Transaction } from "../types";
 
 type DashboardPageProps = {
@@ -24,27 +24,50 @@ function DashboardPage({
 
   return (
     <div className="space-y-5">
-      <section className="grid grid-cols-3 gap-3">
-        <MetricCard label="Learning" value={learning} accent="bg-emerald-600" />
-        <MetricCard label="Teaching" value={teaching} accent="bg-indigo-600" />
-        <MetricCard label="Done" value={completed} accent="bg-amber-500" />
+      <section className="quest-card-dark float-in rounded-3xl p-5 text-white">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="flex items-center gap-1.5 text-xs font-black uppercase text-amber-200">
+              <Sparkles size={14} aria-hidden="true" />
+              Daily quest
+            </p>
+            <h2 className="mt-2 text-2xl font-black leading-tight">
+              Trade one skill, unlock your next boost.
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-white/70">
+              Spend, earn, and teach to keep your exchange streak moving.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white/12 px-3 py-2 text-center">
+            <p className="text-2xl font-black">75%</p>
+            <p className="text-[0.68rem] font-bold uppercase text-white/60">
+              XP
+            </p>
+          </div>
+        </div>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+      <section className="grid grid-cols-3 gap-3">
+        <MetricCard label="Learning" value={learning} accent="from-teal-400 to-cyan-300" />
+        <MetricCard label="Teaching" value={teaching} accent="from-orange-300 to-rose-300" />
+        <MetricCard label="Done" value={completed} accent="from-amber-300 to-lime-300" />
+      </section>
+
+      <section className="quest-card float-in rounded-3xl p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-semibold text-slate-950">
+            <p className="text-sm font-black text-slate-950">
               {suggestedSkill.title}
             </p>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm font-medium text-slate-500">
               {suggestedSkill.teacher} / {suggestedSkill.duration}
             </p>
           </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-[0_4px_0_rgba(23,32,51,0.12)]">
             <Clock3 size={18} aria-hidden="true" />
           </div>
         </div>
-        <button className="mt-4 flex w-full items-center justify-between rounded-lg bg-slate-950 px-4 py-3 text-sm font-semibold text-white">
+        <button className="quest-button mt-4 flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-black">
           Continue exchange
           <ArrowRight size={17} aria-hidden="true" />
         </button>
@@ -52,33 +75,35 @@ function DashboardPage({
 
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-semibold">Progress tracking</h2>
+          <h2 className="text-base font-black">Quest map</h2>
           <Route size={18} className="text-slate-500" aria-hidden="true" />
         </div>
         <div className="space-y-2">
           {progressItems.slice(0, 2).map((item) => (
             <article
               key={item.id}
-              className="rounded-lg border border-stone-200 bg-white p-4"
+              className="quest-card rounded-2xl p-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-semibold">{item.skillTitle}</p>
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="text-sm font-black">{item.skillTitle}</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
                     {item.deliveryType} / {item.status}
                   </p>
                 </div>
-                <span className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800">
+                <span className="rounded-xl bg-lime-100 px-2 py-1 text-xs font-black text-lime-900">
                   {item.progress}%
                 </span>
               </div>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-stone-100">
+              <div className="mt-3 h-3 overflow-hidden rounded-full bg-slate-950/10">
                 <div
-                  className="h-full rounded-full bg-emerald-600"
+                  className="h-full rounded-full bg-gradient-to-r from-teal-400 via-lime-300 to-amber-300"
                   style={{ width: `${item.progress}%` }}
                 />
               </div>
-              <p className="mt-3 text-xs text-slate-500">{item.nextAction}</p>
+              <p className="mt-3 text-xs font-medium text-slate-500">
+                {item.nextAction}
+              </p>
             </article>
           ))}
         </div>
@@ -86,24 +111,24 @@ function DashboardPage({
 
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-semibold">What you earn</h2>
+          <h2 className="text-base font-black">Loot earned</h2>
           <Trophy size={18} className="text-slate-500" aria-hidden="true" />
         </div>
         <div className="space-y-2">
           {rewards.map((reward) => (
             <article
               key={reward.id}
-              className="flex items-start justify-between gap-3 rounded-lg border border-stone-200 bg-white p-3"
+              className="reward-chip flex items-start justify-between gap-3 rounded-2xl p-3"
             >
               <div>
-                <p className="text-sm font-semibold text-slate-700">
+                <p className="text-sm font-black text-slate-700">
                   {reward.label}
                 </p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
                   {reward.description}
                 </p>
               </div>
-              <p className="text-lg font-semibold">{reward.value}</p>
+              <p className="text-lg font-black">{reward.value}</p>
             </article>
           ))}
         </div>
@@ -111,8 +136,8 @@ function DashboardPage({
 
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-semibold">Recent activity</h2>
-          <span className="text-xs font-medium text-slate-500">
+          <h2 className="text-base font-black">Recent activity</h2>
+          <span className="text-xs font-bold text-slate-500">
             {transactions.length} updates
           </span>
         </div>
@@ -120,16 +145,18 @@ function DashboardPage({
           {transactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between rounded-lg border border-stone-200 bg-white p-3"
+              className="flex items-center justify-between rounded-2xl border border-slate-950/10 bg-white/75 p-3"
             >
               <div>
-                <p className="text-sm font-medium">{transaction.title}</p>
-                <p className="mt-1 text-xs text-slate-500">{transaction.time}</p>
+                <p className="text-sm font-bold">{transaction.title}</p>
+                <p className="mt-1 text-xs font-medium text-slate-500">
+                  {transaction.time}
+                </p>
               </div>
               <span
-                className={`text-sm font-semibold ${
+                className={`text-sm font-black ${
                   transaction.type === "earned"
-                    ? "text-emerald-700"
+                    ? "text-teal-700"
                     : "text-rose-700"
                 }`}
               >
@@ -152,10 +179,10 @@ type MetricCardProps = {
 
 function MetricCard({ label, value, accent }: MetricCardProps) {
   return (
-    <div className="rounded-lg border border-stone-200 bg-white p-3">
-      <div className={`mb-3 h-1.5 w-8 rounded-full ${accent}`} />
-      <p className="text-2xl font-semibold">{value}</p>
-      <p className="mt-1 text-xs font-medium text-slate-500">{label}</p>
+    <div className="quest-card rounded-2xl p-3">
+      <div className={`mb-3 h-2 w-9 rounded-full bg-gradient-to-r ${accent}`} />
+      <p className="text-2xl font-black">{value}</p>
+      <p className="mt-1 text-xs font-bold text-slate-500">{label}</p>
     </div>
   );
 }

@@ -87,14 +87,14 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
 
   return (
     <div className="space-y-4">
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+      <section className="quest-card-dark float-in rounded-3xl p-5 text-white">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lime-200 text-slate-950 shadow-[0_5px_0_rgba(255,255,255,0.18)]">
             <Plus size={19} aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-base font-semibold">Offer a skill</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <h2 className="text-xl font-black">Open a teaching quest</h2>
+            <p className="mt-1 text-sm font-medium text-white/70">
               Create a temporary listing for the demo session.
             </p>
           </div>
@@ -103,8 +103,8 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
 
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-semibold">Delivery options</h2>
-          <span className="text-xs font-medium text-slate-500">
+          <h2 className="text-base font-black">Delivery options</h2>
+          <span className="text-xs font-bold text-slate-500">
             Choose one
           </span>
         </div>
@@ -117,17 +117,17 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
               <button
                 key={option.type}
                 type="button"
-                className={`rounded-lg border p-3 text-left ${
+                className={`rounded-2xl border p-3 text-left transition active:scale-95 ${
                   isActive
-                    ? "border-slate-950 bg-slate-950 text-white"
-                    : "border-stone-200 bg-white text-slate-700"
+                    ? "border-slate-950 bg-slate-950 text-white shadow-[0_5px_0_#09bc8a]"
+                    : "border-slate-950/10 bg-white/75 text-slate-700 shadow-[0_4px_0_rgba(23,32,51,0.05)]"
                 }`}
                 onClick={() => updateField("deliveryType", option.type)}
               >
                 <Icon size={18} aria-hidden="true" />
-                <p className="mt-2 text-sm font-semibold">{option.label}</p>
+                <p className="mt-2 text-sm font-black">{option.label}</p>
                 <p
-                  className={`mt-1 text-xs leading-5 ${
+                  className={`mt-1 text-xs font-medium leading-5 ${
                     isActive ? "text-slate-300" : "text-slate-500"
                   }`}
                 >
@@ -139,13 +139,13 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </div>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+      <section className="quest-card rounded-3xl p-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Inbox size={18} className="text-slate-500" aria-hidden="true" />
-            <h2 className="text-base font-semibold">Teaching requests</h2>
+            <h2 className="text-base font-black">Teaching requests</h2>
           </div>
-          <span className="text-xs font-medium text-slate-500">
+          <span className="text-xs font-bold text-slate-500">
             {requests.length}
           </span>
         </div>
@@ -153,23 +153,23 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
           {requests.slice(0, 3).map((request) => (
             <article
               key={request.id}
-              className="rounded-lg border border-stone-200 bg-stone-50 p-3"
+              className="rounded-2xl border border-slate-950/10 bg-white/70 p-3"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-semibold">{request.skillTitle}</p>
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="text-sm font-black">{request.skillTitle}</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
                     {request.learner} / {request.deliveryType}
                   </p>
                 </div>
-                <span className="rounded-lg bg-white px-2 py-1 text-xs font-semibold text-slate-600">
+                <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-black text-amber-800">
                   {request.status}
                 </span>
               </div>
-              <p className="mt-2 text-xs leading-5 text-emerald-700">
+              <p className="mt-2 text-xs font-bold leading-5 text-teal-700">
                 {request.rewardPreview}
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs font-medium text-slate-500">
                 {request.requestedAt}
               </p>
             </article>
@@ -177,24 +177,24 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </div>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+      <section className="quest-card rounded-3xl p-4">
         <div className="mb-3 flex items-center gap-2">
           <Trophy size={18} className="text-amber-700" aria-hidden="true" />
-          <h2 className="text-base font-semibold">Rewards beyond credits</h2>
+          <h2 className="text-base font-black">Rewards beyond credits</h2>
         </div>
         <div className="space-y-2">
           {rewards.map((reward) => (
             <div
               key={reward.id}
-              className="flex items-start justify-between gap-3 rounded-lg bg-stone-50 p-3"
+              className="reward-chip flex items-start justify-between gap-3 rounded-2xl p-3"
             >
               <div>
-                <p className="text-sm font-semibold">{reward.label}</p>
-                <p className="mt-1 text-xs leading-5 text-slate-500">
+                <p className="text-sm font-black">{reward.label}</p>
+                <p className="mt-1 text-xs font-medium leading-5 text-slate-500">
                   {reward.description}
                 </p>
               </div>
-              <span className="text-sm font-semibold text-slate-950">
+              <span className="text-sm font-black text-slate-950">
                 {reward.value}
               </span>
             </div>
@@ -203,15 +203,15 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
       </section>
 
       <form
-        className="space-y-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
+        className="quest-card space-y-3 rounded-3xl p-4"
         onSubmit={handleSubmit}
       >
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-slate-500">
+          <span className="text-xs font-black uppercase text-slate-500">
             Skill title
           </span>
           <input
-            className="mt-2 h-11 w-full rounded-lg border border-stone-200 px-3 text-sm outline-none focus:border-emerald-600"
+            className="soft-input mt-2 h-11 w-full rounded-2xl px-3 text-sm font-semibold outline-none focus:border-teal-600"
             placeholder="e.g. Portfolio feedback"
             value={form.title}
             onChange={(event) => updateField("title", event.target.value)}
@@ -219,11 +219,11 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-slate-500">
+          <span className="text-xs font-black uppercase text-slate-500">
             Category
           </span>
           <select
-            className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm outline-none focus:border-emerald-600"
+            className="soft-input mt-2 h-11 w-full rounded-2xl px-3 text-sm font-semibold outline-none focus:border-teal-600"
             value={form.category}
             onChange={(event) => updateField("category", event.target.value)}
           >
@@ -236,11 +236,11 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-slate-500">
+          <span className="text-xs font-black uppercase text-slate-500">
             Level
           </span>
           <select
-            className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm outline-none focus:border-emerald-600"
+            className="soft-input mt-2 h-11 w-full rounded-2xl px-3 text-sm font-semibold outline-none focus:border-teal-600"
             value={form.level}
             onChange={(event) =>
               updateField(
@@ -256,13 +256,13 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-slate-500">
+          <span className="text-xs font-black uppercase text-slate-500">
             Credit price
           </span>
           <input
             type="number"
             min="1"
-            className="mt-2 h-11 w-full rounded-lg border border-stone-200 px-3 text-sm outline-none focus:border-emerald-600"
+            className="soft-input mt-2 h-11 w-full rounded-2xl px-3 text-sm font-semibold outline-none focus:border-teal-600"
             placeholder="12"
             inputMode="numeric"
             value={form.credits}
@@ -273,11 +273,11 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
         </label>
 
         <label className="block">
-          <span className="text-xs font-semibold uppercase text-slate-500">
+          <span className="text-xs font-black uppercase text-slate-500">
             Description
           </span>
           <textarea
-            className="mt-2 min-h-24 w-full resize-none rounded-lg border border-stone-200 px-3 py-3 text-sm leading-6 outline-none focus:border-emerald-600"
+            className="soft-input mt-2 min-h-24 w-full resize-none rounded-2xl px-3 py-3 text-sm font-semibold leading-6 outline-none focus:border-teal-600"
             placeholder="Describe what learners will receive."
             value={form.description}
             onChange={(event) =>
@@ -288,9 +288,9 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
 
         {message ? (
           <div
-            className={`rounded-lg px-3 py-2 text-sm font-medium ${
+            className={`rounded-2xl px-3 py-2 text-sm font-bold ${
               message.startsWith("Listing")
-                ? "bg-emerald-50 text-emerald-800"
+                ? "bg-teal-100 text-teal-800"
                 : "bg-rose-50 text-rose-800"
             }`}
           >
@@ -300,7 +300,7 @@ function TeachPage({ requests, rewards, onAddSkill }: TeachPageProps) {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-slate-950 px-4 py-3 text-sm font-semibold text-white"
+          className="quest-button w-full rounded-2xl px-4 py-3 text-sm font-black"
         >
           Add listing
         </button>

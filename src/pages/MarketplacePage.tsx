@@ -1,4 +1,4 @@
-import { Search, SearchX, Star } from "lucide-react";
+import { Gem, Search, SearchX, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import EmptyState from "../components/EmptyState";
 import type { Skill } from "../types";
@@ -32,10 +32,20 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
 
   return (
     <div className="space-y-4">
-      <label className="flex h-11 items-center gap-3 rounded-lg border border-stone-200 bg-white px-3 text-slate-500 shadow-sm shadow-stone-200/50">
+      <section className="quest-card-dark float-in rounded-3xl p-4 text-white">
+        <p className="flex items-center gap-1.5 text-xs font-black uppercase text-lime-200">
+          <Gem size={14} aria-hidden="true" />
+          Skill marketplace
+        </p>
+        <h2 className="mt-2 text-2xl font-black leading-tight">
+          Pick a quest, spend credits, learn faster.
+        </h2>
+      </section>
+
+      <label className="soft-input flex h-12 items-center gap-3 rounded-2xl px-3 text-slate-500">
         <Search size={18} aria-hidden="true" />
         <input
-          className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+          className="w-full bg-transparent text-sm font-semibold outline-none placeholder:text-slate-400"
           placeholder="Search skills"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
@@ -49,10 +59,10 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
           return (
             <button
               key={category}
-              className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${
+              className={`shrink-0 rounded-2xl border px-3 py-2 text-sm font-black transition active:scale-95 ${
                 isActive
-                  ? "border-slate-950 bg-slate-950 text-white"
-                  : "border-stone-200 bg-white text-slate-600"
+                  ? "border-slate-950 bg-slate-950 text-white shadow-[0_4px_0_#09bc8a]"
+                  : "border-slate-950/10 bg-white/75 text-slate-600"
               }`}
               type="button"
               onClick={() => setActiveCategory(category)}
@@ -67,31 +77,31 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
         {filteredSkills.map((skill) => (
           <article
             key={skill.id}
-            className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60"
+            className="quest-card float-in rounded-3xl p-4"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="rounded-lg bg-stone-100 px-2 py-1 text-xs font-semibold text-slate-600">
+                <span className="rounded-full bg-teal-100 px-2.5 py-1 text-xs font-black text-teal-800">
                   {skill.category}
                 </span>
-                <h2 className="mt-3 text-base font-semibold">{skill.title}</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <h2 className="mt-3 text-base font-black">{skill.title}</h2>
+                <p className="mt-1 text-sm font-medium text-slate-500">
                   {skill.teacher} / {skill.deliveryType}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-lg font-semibold">{skill.credits}</p>
-                <p className="text-xs text-slate-500">credits</p>
+              <div className="rounded-2xl bg-amber-100 px-3 py-2 text-right text-amber-950">
+                <p className="text-lg font-black">{skill.credits}</p>
+                <p className="text-xs font-bold">credits</p>
               </div>
             </div>
             <div className="mt-4 flex items-center justify-between text-sm">
-              <span className="flex items-center gap-1 text-amber-700">
+              <span className="flex items-center gap-1 font-black text-amber-700">
                 <Star size={15} fill="currentColor" aria-hidden="true" />
                 {skill.rating}
               </span>
-              <span className="text-slate-500">{skill.duration}</span>
+              <span className="font-medium text-slate-500">{skill.duration}</span>
               <button
-                className="rounded-lg bg-emerald-700 px-3 py-2 font-semibold text-white"
+                className="quest-button rounded-2xl px-4 py-2 font-black"
                 onClick={() => onSelectSkill(skill)}
               >
                 View
