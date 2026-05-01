@@ -20,12 +20,16 @@ Users can earn credits first, then spend them later with someone else.
 4. Show the dashboard and current credit balance.
 5. Open Skills and use search or category filters.
 6. Select a skill to open the detail screen.
-7. Request the learning session and show the credit deduction.
-8. Open Wallet to show the new spent transaction.
-9. Open Earn and complete a micro-task.
-10. Show the increased credit balance and earned transaction.
-11. Open Teach and add a new skill listing.
-12. Return to Skills and show the temporary listing at the top.
+7. Explain the exchange format: async help, video call, face-to-face, or mini course.
+8. Point out the progress steps and teacher rewards beyond credits.
+9. Request the learning session and show the credit deduction.
+10. Open the dashboard to show progress tracking.
+11. Open Wallet to show the new spent transaction.
+12. Open Earn and complete a micro-task.
+13. Show the increased credit balance and earned transaction.
+14. Open Teach to show incoming teaching requests and reward types.
+15. Add a new skill listing with a chosen delivery model.
+16. Return to Skills and show the temporary listing at the top.
 
 ## 4. Key Message
 
@@ -37,3 +41,5 @@ Kambio demonstrates how an asynchronous credit system can make peer-to-peer skil
 - The prototype is intentionally frontend-only.
 - Credit changes, completed tasks, and added listings are simulated with React state.
 - The strongest narrative is: earn credits first, spend them later with a different person.
+- Kambio is not only a course app. A listing can be async feedback, a video call, an in-person tutorial, or a compact mini course.
+- Teachers earn more than credits: they build reputation, badges, and portfolio proof.

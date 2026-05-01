@@ -1,11 +1,13 @@
-import { ArrowRight, Clock3 } from "lucide-react";
-import type { Skill, Transaction } from "../types";
+import { ArrowRight, Clock3, Route, Trophy } from "lucide-react";
+import type { LearningProgress, RewardStat, Skill, Transaction } from "../types";
 
 type DashboardPageProps = {
   completed: number;
   learning: number;
   teaching: number;
   skills: Skill[];
+  progressItems: LearningProgress[];
+  rewards: RewardStat[];
   transactions: Transaction[];
 };
 
@@ -14,6 +16,8 @@ function DashboardPage({
   learning,
   teaching,
   skills,
+  progressItems,
+  rewards,
   transactions,
 }: DashboardPageProps) {
   const suggestedSkill = skills[0];
@@ -44,6 +48,65 @@ function DashboardPage({
           Continue exchange
           <ArrowRight size={17} aria-hidden="true" />
         </button>
+      </section>
+
+      <section>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-base font-semibold">Progress tracking</h2>
+          <Route size={18} className="text-slate-500" aria-hidden="true" />
+        </div>
+        <div className="space-y-2">
+          {progressItems.slice(0, 2).map((item) => (
+            <article
+              key={item.id}
+              className="rounded-lg border border-stone-200 bg-white p-4"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold">{item.skillTitle}</p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {item.deliveryType} / {item.status}
+                  </p>
+                </div>
+                <span className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800">
+                  {item.progress}%
+                </span>
+              </div>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-stone-100">
+                <div
+                  className="h-full rounded-full bg-emerald-600"
+                  style={{ width: `${item.progress}%` }}
+                />
+              </div>
+              <p className="mt-3 text-xs text-slate-500">{item.nextAction}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-base font-semibold">What you earn</h2>
+          <Trophy size={18} className="text-slate-500" aria-hidden="true" />
+        </div>
+        <div className="space-y-2">
+          {rewards.map((reward) => (
+            <article
+              key={reward.id}
+              className="flex items-start justify-between gap-3 rounded-lg border border-stone-200 bg-white p-3"
+            >
+              <div>
+                <p className="text-sm font-semibold text-slate-700">
+                  {reward.label}
+                </p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  {reward.description}
+                </p>
+              </div>
+              <p className="text-lg font-semibold">{reward.value}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section>

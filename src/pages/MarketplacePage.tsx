@@ -76,7 +76,7 @@ function MarketplacePage({ skills, onSelectSkill }: MarketplacePageProps) {
                 </span>
                 <h2 className="mt-3 text-base font-semibold">{skill.title}</h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  {skill.teacher} / {skill.format}
+                  {skill.teacher} / {skill.deliveryType}
                 </p>
               </div>
               <div className="text-right">

@@ -1,4 +1,4 @@
-import { ArrowLeft, CalendarClock, Check, Star } from "lucide-react";
+import { ArrowLeft, CalendarClock, Check, Gift, Route, Star } from "lucide-react";
 import type { Skill } from "../types";
 
 type SkillDetailPageProps = {
@@ -52,7 +52,31 @@ function SkillDetailPage({
         <div className="mt-5 grid grid-cols-3 gap-2 text-center text-sm">
           <DetailMetric label="Rating" value={skill.rating.toString()} />
           <DetailMetric label="Length" value={skill.duration} />
-          <DetailMetric label="Format" value={skill.format} />
+          <DetailMetric label="Type" value={skill.deliveryType} />
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">
+        <div className="flex items-start gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-950 text-white">
+            <Route size={18} aria-hidden="true" />
+          </div>
+          <div>
+            <h3 className="text-base font-semibold">Exchange format</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              {skill.deliverySummary}
+            </p>
+          </div>
+        </div>
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+          {skill.trackingSteps.map((step) => (
+            <span
+              key={step}
+              className="shrink-0 rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-xs font-semibold text-slate-600"
+            >
+              {step}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -73,6 +97,16 @@ function SkillDetailPage({
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-950">
+        <div className="flex gap-3">
+          <Gift size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
+          <div>
+            <p className="text-sm font-semibold">Teacher rewards</p>
+            <p className="mt-1 text-sm leading-6">{skill.rewardNote}</p>
+          </div>
+        </div>
       </section>
 
       <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/60">

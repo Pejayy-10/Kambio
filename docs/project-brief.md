@@ -13,6 +13,9 @@ Create a polished mobile-first UI that demonstrates:
 - A user dashboard
 - Temporary add/request/complete interactions
 - Frontend-only state simulation
+- Delivery models for async help, video calls, face-to-face tutorials, and mini courses
+- Progress tracking for requested and active exchanges
+- Teacher rewards beyond credits, including reputation, badges, and portfolio proof
 
 ## Non-Goals
 

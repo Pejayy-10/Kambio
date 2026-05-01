@@ -14,11 +14,14 @@ Implemented demo flows:
 - Onboarding flow
 - Frontend-only login/register flow
 - Browse skill listings
+- Compare delivery models: async help, video call, face-to-face, or mini course
 - Filter and search the marketplace
 - Open a skill detail screen
 - Request a session and spend credits
 - Complete micro-tasks and earn credits
 - Add a temporary skill listing
+- Track learning progress and teaching requests
+- Show non-credit rewards such as reputation, badges, and portfolio proof
 - View updated wallet and transaction activity
 
 ## Tech Stack

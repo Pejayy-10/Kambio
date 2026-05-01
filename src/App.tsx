@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import AppShell from "./components/AppShell";
-import { currentUser, earnTasks, featuredSkills, recentTransactions } from "./data/mockData";
+import {
+  currentUser,
+  earnTasks,
+  featuredSkills,
+  learningProgress,
+  recentTransactions,
+  rewardStats,
+  teachingRequests,
+} from "./data/mockData";
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
 import EarnPage from "./pages/EarnPage";
@@ -13,10 +21,13 @@ import WalletPage from "./pages/WalletPage";
 import type {
   AppPhase,
   AuthProfile,
+  DeliveryType,
   EarnTask,
+  LearningProgress,
   Skill,
   SkillListingInput,
   TabId,
+  TeachingRequest,
   Transaction,
 } from "./types";
 
@@ -39,6 +50,13 @@ const pageMeta: Omit<Record<TabId, { title: string; subtitle: string }>, "dashbo
   },
 };
 
+const formatByDeliveryType: Record<DeliveryType, Skill["format"]> = {
+  "Async Help": "Async",
+  "Video Call": "Live",
+  "Face-to-Face": "Live",
+  "Mini Course": "Hybrid",
+};
+
 function App() {
   const [phase, setPhase] = useState<AppPhase>("loading");
   const [profile, setProfile] = useState<AuthProfile>({
@@ -51,6 +69,10 @@ function App() {
   const [learningCount, setLearningCount] = useState(currentUser.learning);
   const [teachingCount, setTeachingCount] = useState(currentUser.teaching);
   const [completedCount, setCompletedCount] = useState(currentUser.completed);
+  const [progressItems, setProgressItems] =
+    useState<LearningProgress[]>(learningProgress);
+  const [incomingRequests, setIncomingRequests] =
+    useState<TeachingRequest[]>(teachingRequests);
   const [transactions, setTransactions] =
     useState<Transaction[]>(recentTransactions);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
@@ -61,6 +83,14 @@ function App() {
     title: `Hi, ${profile.name}`,
     subtitle: "Your skill exchange overview",
   };
+  const visibleRewards = rewardStats.map((reward) =>
+    reward.id === "reward-credits"
+      ? {
+          ...reward,
+          value: credits.toString(),
+        }
+      : reward,
+  );
   const meta =
     activeTab === "marketplace" && selectedSkill
       ? {
@@ -127,6 +157,18 @@ function App() {
       ...currentTransactions,
     ]);
     setRequestedSkillIds((currentIds) => [...currentIds, skill.id]);
+    setProgressItems((currentItems) => [
+      {
+        id: `progress-${skill.id}-${Date.now()}`,
+        skillTitle: skill.title,
+        teacher: skill.teacher,
+        deliveryType: skill.deliveryType,
+        status: "Requested",
+        progress: 15,
+        nextAction: "Waiting for teacher confirmation",
+      },
+      ...currentItems,
+    ]);
     setRequestMessage("Request sent. Credits were deducted for this session.");
   };
 
@@ -161,7 +203,7 @@ function App() {
       rating: 5,
       duration: "30 min",
       credits: listing.credits,
-      format: listing.format,
+      format: formatByDeliveryType[listing.deliveryType],
       level: listing.level,
       description: listing.description,
       outcomes: [
@@ -170,10 +212,33 @@ function App() {
         "Continue the exchange asynchronously",
       ],
       nextSlot: "New demo listing",
+      deliveryType: listing.deliveryType,
+      deliverySummary:
+        listing.deliveryType === "Mini Course"
+          ? "A compact course-style listing with lessons, checkpoints, and a completion task."
+          : "A flexible peer exchange with scheduling and progress tracked in the prototype.",
+      trackingSteps:
+        listing.deliveryType === "Mini Course"
+          ? ["Requested", "Accepted", "In Progress", "Submitted Work", "Completed", "Rated"]
+          : ["Requested", "Accepted", "In Progress", "Completed", "Rated"],
+      rewardNote:
+        "Earn credits, reputation, badge progress, and visible teaching proof.",
     };
 
     setSkills((currentSkills) => [newSkill, ...currentSkills]);
     setTeachingCount((currentTeaching) => currentTeaching + 1);
+    setIncomingRequests((currentRequests) => [
+      {
+        id: `request-demo-${Date.now()}`,
+        learner: "Demo Learner",
+        skillTitle: listing.title,
+        deliveryType: listing.deliveryType,
+        status: "Requested",
+        rewardPreview: `+${listing.credits} credits / reputation / portfolio proof`,
+        requestedAt: "Just now",
+      },
+      ...currentRequests,
+    ]);
   };
 
   if (phase === "loading") {
@@ -222,7 +287,13 @@ function App() {
           />
         );
       case "teach":
-        return <TeachPage onAddSkill={handleAddSkill} />;
+        return (
+          <TeachPage
+            requests={incomingRequests}
+            rewards={visibleRewards}
+            onAddSkill={handleAddSkill}
+          />
+        );
       case "wallet":
         return (
           <WalletPage
@@ -238,6 +309,8 @@ function App() {
             learning={learningCount}
             teaching={teachingCount}
             skills={skills}
+            progressItems={progressItems}
+            rewards={visibleRewards}
             transactions={transactions}
           />
         );

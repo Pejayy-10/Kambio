@@ -17,6 +17,20 @@ export type AuthProfile = {
   email: string;
 };
 
+export type DeliveryType =
+  | "Async Help"
+  | "Video Call"
+  | "Face-to-Face"
+  | "Mini Course";
+
+export type ProgressStatus =
+  | "Requested"
+  | "Accepted"
+  | "In Progress"
+  | "Submitted Work"
+  | "Completed"
+  | "Rated";
+
 export type Skill = {
   id: string;
   title: string;
@@ -30,13 +44,17 @@ export type Skill = {
   description: string;
   outcomes: string[];
   nextSlot: string;
+  deliveryType: DeliveryType;
+  deliverySummary: string;
+  trackingSteps: ProgressStatus[];
+  rewardNote: string;
 };
 
 export type SkillListingInput = {
   title: string;
   category: string;
   credits: number;
-  format: Skill["format"];
+  deliveryType: DeliveryType;
   level: Skill["level"];
   description: string;
 };
@@ -55,4 +73,31 @@ export type Transaction = {
   type: "earned" | "spent";
   amount: number;
   time: string;
+};
+
+export type RewardStat = {
+  id: string;
+  label: string;
+  value: string;
+  description: string;
+};
+
+export type LearningProgress = {
+  id: string;
+  skillTitle: string;
+  teacher: string;
+  deliveryType: DeliveryType;
+  status: ProgressStatus;
+  progress: number;
+  nextAction: string;
+};
+
+export type TeachingRequest = {
+  id: string;
+  learner: string;
+  skillTitle: string;
+  deliveryType: DeliveryType;
+  status: ProgressStatus;
+  rewardPreview: string;
+  requestedAt: string;
 };
