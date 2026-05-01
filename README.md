@@ -10,6 +10,9 @@ This is a presentation-ready UI prototype. It uses local mock data and React sta
 
 Implemented demo flows:
 
+- Loading/splash screen
+- Onboarding flow
+- Frontend-only login/register flow
 - Browse skill listings
 - Filter and search the marketplace
 - Open a skill detail screen

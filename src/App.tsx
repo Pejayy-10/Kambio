@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppShell from "./components/AppShell";
 import { currentUser, earnTasks, featuredSkills, recentTransactions } from "./data/mockData";
+import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
 import EarnPage from "./pages/EarnPage";
+import LoadingPage from "./pages/LoadingPage";
 import MarketplacePage from "./pages/MarketplacePage";
+import OnboardingPage from "./pages/OnboardingPage";
 import SkillDetailPage from "./pages/SkillDetailPage";
 import TeachPage from "./pages/TeachPage";
 import WalletPage from "./pages/WalletPage";
 import type {
+  AppPhase,
+  AuthProfile,
   EarnTask,
   Skill,
   SkillListingInput,
@@ -15,11 +20,7 @@ import type {
   Transaction,
 } from "./types";
 
-const pageMeta: Record<TabId, { title: string; subtitle: string }> = {
-  dashboard: {
-    title: `Hi, ${currentUser.name}`,
-    subtitle: "Your skill exchange overview",
-  },
+const pageMeta: Omit<Record<TabId, { title: string; subtitle: string }>, "dashboard"> = {
   marketplace: {
     title: "Find skills",
     subtitle: "Spend credits with trusted peers",
@@ -39,6 +40,11 @@ const pageMeta: Record<TabId, { title: string; subtitle: string }> = {
 };
 
 function App() {
+  const [phase, setPhase] = useState<AppPhase>("loading");
+  const [profile, setProfile] = useState<AuthProfile>({
+    name: currentUser.name,
+    email: "mika@kambio.demo",
+  });
   const [activeTab, setActiveTab] = useState<TabId>("dashboard");
   const [credits, setCredits] = useState(currentUser.credits);
   const [skills, setSkills] = useState<Skill[]>(featuredSkills);
@@ -51,13 +57,36 @@ function App() {
   const [requestedSkillIds, setRequestedSkillIds] = useState<string[]>([]);
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [requestMessage, setRequestMessage] = useState<string | null>(null);
+  const dashboardMeta = {
+    title: `Hi, ${profile.name}`,
+    subtitle: "Your skill exchange overview",
+  };
   const meta =
     activeTab === "marketplace" && selectedSkill
       ? {
           title: "Skill detail",
           subtitle: "Review before spending credits",
         }
-      : pageMeta[activeTab];
+      : activeTab === "dashboard"
+        ? dashboardMeta
+        : pageMeta[activeTab];
+
+  useEffect(() => {
+    if (phase !== "loading") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setPhase("onboarding");
+    }, 1200);
+
+    return () => window.clearTimeout(timer);
+  }, [phase]);
+
+  const handleAuthSubmit = (authProfile: AuthProfile) => {
+    setProfile(authProfile);
+    setPhase("app");
+  };
 
   const handleTabChange = (tabId: TabId) => {
     setActiveTab(tabId);
@@ -128,7 +157,7 @@ function App() {
       id: `skill-demo-${Date.now()}`,
       title: listing.title,
       category: listing.category,
-      teacher: currentUser.name,
+      teacher: profile.name,
       rating: 5,
       duration: "30 min",
       credits: listing.credits,
@@ -146,6 +175,18 @@ function App() {
     setSkills((currentSkills) => [newSkill, ...currentSkills]);
     setTeachingCount((currentTeaching) => currentTeaching + 1);
   };
+
+  if (phase === "loading") {
+    return <LoadingPage />;
+  }
+
+  if (phase === "onboarding") {
+    return <OnboardingPage onDone={() => setPhase("auth")} />;
+  }
+
+  if (phase === "auth") {
+    return <AuthPage onSubmit={handleAuthSubmit} />;
+  }
 
   const activePage = (() => {
     switch (activeTab) {
