@@ -8,6 +8,15 @@ export type NavItem = {
   icon: LucideIcon;
 };
 
+export type AuthMode = "login" | "register";
+
+export type AppPhase = "loading" | "onboarding" | "auth" | "app";
+
+export type AuthProfile = {
+  name: string;
+  email: string;
+};
+
 export type Skill = {
   id: string;
   title: string;

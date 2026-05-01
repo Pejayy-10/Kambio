@@ -10,6 +10,9 @@
 
 ## UI
 
+- [x] Loading screen
+- [x] Onboarding flow
+- [x] Login/register screen
 - [x] Mobile app shell
 - [x] Header with credit balance
 - [x] Bottom navigation

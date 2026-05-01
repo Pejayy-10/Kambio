@@ -28,3 +28,17 @@ textarea,
 select {
   font: inherit;
 }
+
+.loading-bar {
+  animation: loading-bar 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loading-bar {
+  from {
+    transform: translateX(-20%);
+  }
+
+  to {
+    transform: translateX(55%);
+  }
+}
