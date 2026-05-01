@@ -15,7 +15,7 @@
 - [x] Bottom navigation
 - [x] Dashboard screen
 - [x] Marketplace screen
-- [ ] Skill detail screen
+- [x] Skill detail screen
 - [x] Offer skill form
 - [x] Earn credits/tasks screen
 - [x] Wallet screen
@@ -23,12 +23,12 @@
 ## Interactions
 
 - [ ] Add temporary skill
-- [ ] Request skill session
-- [ ] Deduct credits
+- [x] Request skill session
+- [x] Deduct credits
 - [ ] Complete task
 - [ ] Add earned credits
-- [ ] Add transaction log entries
-- [ ] Handle insufficient credits
+- [x] Add transaction log entries
+- [x] Handle insufficient credits
 
 ## Presentation Readiness
 

@@ -19,6 +19,15 @@ export const featuredSkills: Skill[] = [
     duration: "30 min",
     credits: 12,
     format: "Async",
+    level: "Intermediate",
+    description:
+      "Get a structured critique of a mobile screen, with notes on spacing, hierarchy, and interaction clarity.",
+    outcomes: [
+      "Identify layout issues",
+      "Improve visual hierarchy",
+      "Receive prioritized action notes",
+    ],
+    nextSlot: "Available today",
   },
   {
     id: "skill-excel",
@@ -29,6 +38,15 @@ export const featuredSkills: Skill[] = [
     duration: "45 min",
     credits: 16,
     format: "Live",
+    level: "Beginner",
+    description:
+      "Learn practical spreadsheet formulas for class reports, trackers, and quick analysis work.",
+    outcomes: [
+      "Use lookup formulas",
+      "Clean repeated data",
+      "Build a simple report table",
+    ],
+    nextSlot: "Tomorrow, 4:00 PM",
   },
   {
     id: "skill-speaking",
@@ -39,6 +57,15 @@ export const featuredSkills: Skill[] = [
     duration: "25 min",
     credits: 10,
     format: "Hybrid",
+    level: "Beginner",
+    description:
+      "Practice a short presentation and receive focused feedback on pacing, structure, and delivery.",
+    outcomes: [
+      "Refine opening remarks",
+      "Improve delivery pacing",
+      "Get confidence notes",
+    ],
+    nextSlot: "Friday, 2:30 PM",
   },
 ];
 
