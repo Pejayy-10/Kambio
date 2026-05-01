@@ -7,7 +7,13 @@ import MarketplacePage from "./pages/MarketplacePage";
 import SkillDetailPage from "./pages/SkillDetailPage";
 import TeachPage from "./pages/TeachPage";
 import WalletPage from "./pages/WalletPage";
-import type { Skill, TabId, Transaction } from "./types";
+import type {
+  EarnTask,
+  Skill,
+  SkillListingInput,
+  TabId,
+  Transaction,
+} from "./types";
 
 const pageMeta: Record<TabId, { title: string; subtitle: string }> = {
   dashboard: {
@@ -35,11 +41,15 @@ const pageMeta: Record<TabId, { title: string; subtitle: string }> = {
 function App() {
   const [activeTab, setActiveTab] = useState<TabId>("dashboard");
   const [credits, setCredits] = useState(currentUser.credits);
+  const [skills, setSkills] = useState<Skill[]>(featuredSkills);
   const [learningCount, setLearningCount] = useState(currentUser.learning);
+  const [teachingCount, setTeachingCount] = useState(currentUser.teaching);
+  const [completedCount, setCompletedCount] = useState(currentUser.completed);
   const [transactions, setTransactions] =
     useState<Transaction[]>(recentTransactions);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [requestedSkillIds, setRequestedSkillIds] = useState<string[]>([]);
+  const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [requestMessage, setRequestMessage] = useState<string | null>(null);
   const meta =
     activeTab === "marketplace" && selectedSkill
@@ -91,6 +101,52 @@ function App() {
     setRequestMessage("Request sent. Credits were deducted for this session.");
   };
 
+  const handleCompleteTask = (task: EarnTask) => {
+    if (completedTaskIds.includes(task.id)) {
+      return;
+    }
+
+    const transaction: Transaction = {
+      id: `txn-earned-${task.id}-${Date.now()}`,
+      title: task.title,
+      type: "earned",
+      amount: task.credits,
+      time: "Just now",
+    };
+
+    setCredits((currentCredits) => currentCredits + task.credits);
+    setCompletedCount((currentCompleted) => currentCompleted + 1);
+    setCompletedTaskIds((currentIds) => [...currentIds, task.id]);
+    setTransactions((currentTransactions) => [
+      transaction,
+      ...currentTransactions,
+    ]);
+  };
+
+  const handleAddSkill = (listing: SkillListingInput) => {
+    const newSkill: Skill = {
+      id: `skill-demo-${Date.now()}`,
+      title: listing.title,
+      category: listing.category,
+      teacher: currentUser.name,
+      rating: 5,
+      duration: "30 min",
+      credits: listing.credits,
+      format: listing.format,
+      level: listing.level,
+      description: listing.description,
+      outcomes: [
+        "Get peer support from a new listing",
+        "Use credits without direct barter",
+        "Continue the exchange asynchronously",
+      ],
+      nextSlot: "New demo listing",
+    };
+
+    setSkills((currentSkills) => [newSkill, ...currentSkills]);
+    setTeachingCount((currentTeaching) => currentTeaching + 1);
+  };
+
   const activePage = (() => {
     switch (activeTab) {
       case "marketplace":
@@ -112,14 +168,20 @@ function App() {
 
         return (
           <MarketplacePage
-            skills={featuredSkills}
+            skills={skills}
             onSelectSkill={handleSelectSkill}
           />
         );
       case "earn":
-        return <EarnPage tasks={earnTasks} />;
+        return (
+          <EarnPage
+            completedTaskIds={completedTaskIds}
+            tasks={earnTasks}
+            onCompleteTask={handleCompleteTask}
+          />
+        );
       case "teach":
-        return <TeachPage />;
+        return <TeachPage onAddSkill={handleAddSkill} />;
       case "wallet":
         return (
           <WalletPage
@@ -131,10 +193,10 @@ function App() {
       default:
         return (
           <DashboardPage
-            completed={currentUser.completed}
+            completed={completedCount}
             learning={learningCount}
-            teaching={currentUser.teaching}
-            skills={featuredSkills}
+            teaching={teachingCount}
+            skills={skills}
             transactions={transactions}
           />
         );

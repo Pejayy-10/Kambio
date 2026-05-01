@@ -33,7 +33,7 @@ function DashboardPage({
               {suggestedSkill.title}
             </p>
             <p className="mt-1 text-sm text-slate-500">
-              {suggestedSkill.teacher} · {suggestedSkill.duration}
+              {suggestedSkill.teacher} / {suggestedSkill.duration}
             </p>
           </div>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
@@ -49,7 +49,9 @@ function DashboardPage({
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-base font-semibold">Recent activity</h2>
-          <span className="text-xs font-medium text-slate-500">3 updates</span>
+          <span className="text-xs font-medium text-slate-500">
+            {transactions.length} updates
+          </span>
         </div>
         <div className="space-y-2">
           {transactions.map((transaction) => (

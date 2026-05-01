@@ -22,11 +22,11 @@
 
 ## Interactions
 
-- [ ] Add temporary skill
+- [x] Add temporary skill
 - [x] Request skill session
 - [x] Deduct credits
-- [ ] Complete task
-- [ ] Add earned credits
+- [x] Complete task
+- [x] Add earned credits
 - [x] Add transaction log entries
 - [x] Handle insufficient credits
 
